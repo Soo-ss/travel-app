@@ -1,0 +1,105 @@
+.screen {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #efefef;
+}
+
+.phone {
+  width: min(100%, 390px);
+  min-height: 100vh;
+  background: #f7f7f8;
+  padding: 12px 0 70px;
+}
+
+.topBar {
+  padding: 0 16px 12px;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 10px;
+  border-bottom: 1px solid #eceef2;
+
+  button {
+    border: 0;
+    background: transparent;
+    font-size: 24px;
+    color: #646a75;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #2e3138;
+  }
+
+  p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #9ea4af;
+  }
+}
+
+.pickerWrap {
+  padding: 8px 10px 0;
+}
+
+.picker {
+  :global(.rdp-root) {
+    --rdp-accent-color: #3f88f7;
+    --rdp-range_middle-background-color: #e8f2ff;
+    --rdp-day-width: 42px;
+    --rdp-day-height: 42px;
+  }
+
+  :global(.rdp-months) {
+    display: block;
+  }
+
+  :global(.rdp-month) {
+    margin-bottom: 16px;
+  }
+
+  :global(.rdp-caption_label) {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2f333a;
+  }
+
+  :global(.rdp-weekday) {
+    color: #a0a6b2;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  :global(.rdp-day_button) {
+    font-size: 14px;
+    color: #6f7480;
+    border-radius: 8px;
+  }
+
+  :global(.rdp-selected .rdp-day_button),
+  :global(.rdp-range_start .rdp-day_button),
+  :global(.rdp-range_end .rdp-day_button) {
+    color: #fff;
+    background: #3f88f7;
+  }
+
+  :global(.rdp-range_middle .rdp-day_button) {
+    background: #e8f2ff;
+    color: #3f88f7;
+  }
+}
+
+.confirm {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: min(100%, 390px);
+  border: 0;
+  height: 58px;
+  background: #3f88f7;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}

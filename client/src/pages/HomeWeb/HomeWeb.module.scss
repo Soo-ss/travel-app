@@ -1,0 +1,167 @@
+.container {
+  font-family: "Pretendard", sans-serif;
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  height: 420px;
+  padding: 20px;
+  color: #fff;
+
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)),
+    url("../../assets/sapporo.jpg") center / cover no-repeat;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.headerIcons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.plus {
+  width: 36px;
+  height: 36px;
+  border: 2px solid red;
+  border-radius: 50%;
+  background: transparent;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  span {
+    width: 20px;
+    height: 2px;
+    background: white;
+  }
+}
+
+.dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+}
+
+.heroContent {
+  margin-top: 100px;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  p {
+    margin-top: 10px;
+    opacity: 0.9;
+  }
+}
+
+.cta {
+  margin-top: 20px;
+  background: #fff;
+  color: #2563eb;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* SEARCH */
+
+.searchSection {
+  margin-top: -40px;
+  background: #fff;
+  border-radius: 24px 24px 0 0;
+  padding: 20px;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f2f2f2;
+  padding: 14px;
+  border-radius: 30px;
+  color: #999;
+}
+
+.categoryRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
+
+  li {
+    font-size: 14px;
+  }
+}
+
+.banner {
+  background: #f8f9fb;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.tag {
+  background: #e0edff;
+  color: #2563eb;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+.magazineHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+
+  button {
+    background: none;
+    border: none;
+    color: #2563eb;
+    cursor: pointer;
+  }
+}
+
+.magazineCard {
+  margin-top: 12px;
+  height: 140px;
+  border-radius: 16px;
+  background: url("/assets/magazine.jpg") center / cover no-repeat;
+}
