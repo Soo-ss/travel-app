@@ -61,12 +61,22 @@ router.post("/book", async (req, res) => {
   }
 });
 
-router.get("/bookings/list", (_req, res) => {
-  const items = listAccommodationBookings();
-  res.json({
-    total: items.length,
-    items,
-  });
+router.get("/bookings/list", async (_req, res) => {
+  try {
+    const items = await listAccommodationBookings();
+    res.json({
+      total: items.length,
+      items,
+    });
+  } catch (error) {
+    logger.warn("Failed to fetch accommodation bookings", error);
+    res.status(500).json({
+      message:
+        error instanceof Error
+          ? error.message
+          : "Failed to load accommodation bookings.",
+    });
+  }
 });
 
 router.get("/:id", async (req, res) => {

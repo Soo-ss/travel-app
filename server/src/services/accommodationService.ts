@@ -72,7 +72,7 @@ export async function bookAccommodation(
     guests: request.guests,
     createdAt: new Date().toISOString(),
   };
-  saveAccommodationBooking(record);
+  await saveAccommodationBooking(record);
 
   return booking;
 }

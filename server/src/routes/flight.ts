@@ -38,12 +38,22 @@ router.post("/book", async (req, res) => {
   }
 });
 
-router.get("/bookings", (_req, res) => {
-  const items = listBookings();
-  res.json({
-    total: items.length,
-    items,
-  });
+router.get("/bookings", async (_req, res) => {
+  try {
+    const items = await listBookings();
+    res.json({
+      total: items.length,
+      items,
+    });
+  } catch (error) {
+    logger.warn("Failed to fetch flight bookings", error);
+    res.status(500).json({
+      message:
+        error instanceof Error
+          ? error.message
+          : "Failed to load flight bookings.",
+    });
+  }
 });
 
 export default router;

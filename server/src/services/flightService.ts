@@ -46,7 +46,7 @@ export async function bookFlight(payload: Partial<FlightBookingRequest>) {
     phone: request.phone,
     createdAt: new Date().toISOString(),
   };
-  saveBooking(record);
+  await saveBooking(record);
 
   return booking;
 }
