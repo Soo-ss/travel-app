@@ -4,7 +4,7 @@ import { CalendarPlus, Search, Menu } from "lucide-react";
 export default function Header() {
   return (
     <header className={styles.header}>
-      <h1 className={styles.logo}>TRIPLE</h1>
+      <h1 className={styles.logo}>LIFESHORT</h1>
 
       <div className={styles.icons}>
         <CalendarPlus size={20} />

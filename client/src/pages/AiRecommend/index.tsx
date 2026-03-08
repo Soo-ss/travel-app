@@ -97,7 +97,8 @@ export default function AiRecommend({
   };
 
   const buttonLabel = useMemo(
-    () => (step === 5 ? (isLoading ? "추천 생성 중..." : "추천 일정 받기") : "다음"),
+    () =>
+      step === 5 ? (isLoading ? "추천 생성 중..." : "추천 일정 받기") : "다음",
     [step, isLoading],
   );
 
@@ -113,14 +114,16 @@ export default function AiRecommend({
               icon="🌍"
             />
             <Section title="일본">
-              {CITY_OPTIONS.map((city) => (
-                <OptionButton
-                  key={city.value}
-                  label={city.label}
-                  selected={selected.includes(city.value)}
-                  onClick={() => toggleSelect(city.value)}
-                />
-              ))}
+              <div className={styles.optionGrid}>
+                {CITY_OPTIONS.map((city) => (
+                  <OptionButton
+                    key={city.value}
+                    label={city.label}
+                    selected={selected.includes(city.value)}
+                    onClick={() => toggleSelect(city.value)}
+                  />
+                ))}
+              </div>
             </Section>
           </>
         );
@@ -134,21 +137,23 @@ export default function AiRecommend({
               subtitle="원하는 기간을 선택해 주세요."
               icon="📅"
             />
-            {[
-              "당일치기",
-              "1박 2일",
-              "2박 3일",
-              "3박 4일",
-              "4박 5일",
-              "5박 6일",
-            ].map((item) => (
-              <OptionButton
-                key={item}
-                label={item}
-                selected={selected.includes(item)}
-                onClick={() => toggleSelect(item)}
-              />
-            ))}
+            <div className={styles.optionGrid}>
+              {[
+                "당일치기",
+                "1박 2일",
+                "2박 3일",
+                "3박 4일",
+                "4박 5일",
+                "5박 6일",
+              ].map((item) => (
+                <OptionButton
+                  key={item}
+                  label={item}
+                  selected={selected.includes(item)}
+                  onClick={() => toggleSelect(item)}
+                />
+              ))}
+            </div>
           </>
         );
 
@@ -161,22 +166,24 @@ export default function AiRecommend({
               subtitle="다중 선택이 가능해요."
               icon="😎"
             />
-            {[
-              "혼자",
-              "친구와",
-              "연인과",
-              "배우자와",
-              "아이와",
-              "부모님과",
-              "기타",
-            ].map((item) => (
-              <OptionButton
-                key={item}
-                label={item}
-                selected={selected.includes(item)}
-                onClick={() => toggleSelect(item, true)}
-              />
-            ))}
+            <div className={styles.optionGrid}>
+              {[
+                "혼자",
+                "친구와",
+                "연인과",
+                "배우자와",
+                "아이와",
+                "부모님과",
+                "기타",
+              ].map((item) => (
+                <OptionButton
+                  key={item}
+                  label={item}
+                  selected={selected.includes(item)}
+                  onClick={() => toggleSelect(item, true)}
+                />
+              ))}
+            </div>
           </>
         );
 
@@ -189,24 +196,26 @@ export default function AiRecommend({
               subtitle="다중 선택이 가능해요."
               icon="📷"
             />
-            {[
-              "체험·액티비티",
-              "SNS 핫플레이스",
-              "자연과 함께",
-              "유명 관광지는 필수",
-              "여유롭게 힐링",
-              "문화·예술·역사",
-              "여행지 느낌 물씬",
-              "쇼핑은 열정적으로",
-              "관광보다 먹방",
-            ].map((item) => (
-              <OptionButton
-                key={item}
-                label={item}
-                selected={selected.includes(item)}
-                onClick={() => toggleSelect(item, true)}
-              />
-            ))}
+            <div className={styles.optionGrid}>
+              {[
+                "체험·액티비티",
+                "SNS 핫플레이스",
+                "자연과 함께",
+                "유명 관광지는 필수",
+                "여유롭게 힐링",
+                "문화·예술·역사",
+                "여행지 느낌 물씬",
+                "쇼핑은 열정적으로",
+                "관광보다 먹방",
+              ].map((item) => (
+                <OptionButton
+                  key={item}
+                  label={item}
+                  selected={selected.includes(item)}
+                  onClick={() => toggleSelect(item, true)}
+                />
+              ))}
+            </div>
           </>
         );
 
@@ -219,14 +228,16 @@ export default function AiRecommend({
               subtitle="선택해주신 스타일로 일정을 만들어드려요."
               icon="🗺️"
             />
-            {["빡곡한 일정 선호", "널널한 일정 선호"].map((item) => (
-              <OptionButton
-                key={item}
-                label={item}
-                selected={selected.includes(item)}
-                onClick={() => toggleSelect(item)}
-              />
-            ))}
+            <div className={styles.optionGrid}>
+              {["빼곡한 일정 선호", "널널한 일정 선호"].map((item) => (
+                <OptionButton
+                  key={item}
+                  label={item}
+                  selected={selected.includes(item)}
+                  onClick={() => toggleSelect(item)}
+                />
+              ))}
+            </div>
           </>
         );
     }
@@ -252,10 +263,16 @@ export default function AiRecommend({
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <>
-      <h4 style={{ marginTop: 24 }}>{title}</h4>
+      <h4 className={styles.sectionTitle}>{title}</h4>
       <div>{children}</div>
     </>
   );

@@ -29,4 +29,5 @@ client/.env
 server/node_modules
 server/logs/*
 server/.env
+server/.env.example
 !server/logs/.gitkeep

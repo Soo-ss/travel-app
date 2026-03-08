@@ -1,9 +1,10 @@
 .container {
-  min-height: 100vh;
-  padding: 24px;
+  min-height: 100dvh;
+  padding: 16px 16px calc(92px + env(safe-area-inset-bottom));
   background: #f5f6f8;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .backBtn {
@@ -18,7 +19,7 @@
 
 .header {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 16px;
 
   .progress {
     position: absolute;
@@ -29,29 +30,32 @@
   }
 
   .icon {
-    font-size: 48px;
-    margin-bottom: 16px;
+    font-size: 38px;
+    margin-bottom: 10px;
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
+    margin: 0;
   }
 
   p {
     color: #888;
-    margin-top: 8px;
+    margin-top: 6px;
+    font-size: 13px;
   }
 }
 
 .option {
   width: 100%;
-  padding: 14px;
-  margin-top: 12px;
+  min-height: 44px;
+  padding: 11px 14px;
   border-radius: 28px;
   border: 1px solid #ddd;
   background: white;
   font-weight: 500;
+  font-size: 14px;
   transition: all 0.2s ease;
 }
 
@@ -60,15 +64,31 @@
   color: #3b82f6;
 }
 
+.sectionTitle {
+  margin: 14px 0 2px;
+  font-size: 14px;
+  color: #2f3440;
+}
+
+.optionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
 .bottomBtn {
+  position: sticky;
+  bottom: calc(10px + env(safe-area-inset-bottom));
   margin-top: auto;
-  padding: 16px;
+  padding: 14px;
   border-radius: 12px;
   background: linear-gradient(90deg, #3b82f6, #2f6fdd);
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   border: none;
+  z-index: 5;
 }
 
 .disabled {
