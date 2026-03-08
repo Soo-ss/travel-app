@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.20.8",
     "cesium": "^1.138.0",
     "dotenv": "^17.3.1",
     "lucide-react": "^0.571.0",

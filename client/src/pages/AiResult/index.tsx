@@ -1,12 +1,89 @@
 import { useMemo, useState } from "react";
+import {
+  GoogleMap,
+  MarkerF,
+  PolylineF,
+  useJsApiLoader,
+} from "@react-google-maps/api";
 import styles from "./AiResult.module.scss";
 import sampleImage from "../../assets/sapporo.jpg";
 import { useAiStore } from "../../stores/useAiStore";
-import type { ScheduleType } from "../../types/travel";
+import type { LatLng, ScheduleType } from "../../types/travel";
 
 interface Props {
   onBack?: () => void;
   onRetry?: () => void;
+}
+
+const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as
+  | string
+  | undefined;
+const DEFAULT_ROUTE = [{ lat: 34.6937, lng: 135.5023 }];
+const MAP_CONTAINER_STYLE = { width: "100%", height: "100%" } as const;
+
+function GoogleRouteMap({ route }: { route: LatLng[] }) {
+  const points = route.length > 0 ? route : DEFAULT_ROUTE;
+  const { isLoaded, loadError } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY ?? "",
+  });
+
+  if (!GOOGLE_MAPS_API_KEY) {
+    return (
+      <div className={styles.mapArea}>
+        <div className={styles.mapFallback}>
+          VITE_GOOGLE_MAPS_API_KEY를 설정해 주세요.
+        </div>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className={styles.mapArea}>
+        <div className={styles.mapFallback}>
+          구글 지도를 불러오지 못했습니다.
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.mapArea}>
+      {!isLoaded ? (
+        <div className={styles.mapFallback}>지도를 불러오는 중...</div>
+      ) : (
+        <GoogleMap
+          mapContainerStyle={MAP_CONTAINER_STYLE}
+          center={points[0]}
+          zoom={11}
+          options={{
+            disableDefaultUI: true,
+            gestureHandling: "greedy",
+            clickableIcons: false,
+          }}
+        >
+          {points.map((point, index) => (
+            <MarkerF
+              key={`${point.lat}-${point.lng}-${index}`}
+              position={point}
+              label={String(index + 1)}
+            />
+          ))}
+          {points.length > 1 ? (
+            <PolylineF
+              path={points}
+              options={{
+                strokeColor: "#6D7DFE",
+                strokeOpacity: 0.9,
+                strokeWeight: 3,
+              }}
+            />
+          ) : null}
+        </GoogleMap>
+      )}
+    </div>
+  );
 }
 
 const CITY_LABEL: Record<string, string> = {
@@ -23,13 +100,16 @@ function toBadgeColor(type: ScheduleType): "purple" | "pink" | "mint" {
 }
 
 export default function AiResult({ onBack, onRetry }: Props) {
-  const { city, days, insight, schedules } = useAiStore();
+  const { city, days, insight, schedules, route } = useAiStore();
   const [currentDay, setCurrentDay] = useState(1);
 
   const dayCount = days || Object.keys(schedules).length || 1;
   const cityLabel = CITY_LABEL[city] ?? city ?? "추천 도시";
   const dayTabs = Array.from({ length: dayCount }, (_, index) => index + 1);
-  const plans = useMemo(() => schedules[currentDay] || [], [currentDay, schedules]);
+  const plans = useMemo(
+    () => schedules[currentDay] || [],
+    [currentDay, schedules],
+  );
 
   return (
     <div className={styles.screen}>
@@ -57,14 +137,12 @@ export default function AiResult({ onBack, onRetry }: Props) {
             {cityLabel}, {Math.max(dayCount - 1, 0)}박 {dayCount}일{" "}
             <span>추천일정</span>입니다.
           </h1>
-          <p>{insight || "트리플이 알려준 맞춤일정으로 여행을 떠나보세요."}</p>
+          <p>
+            {insight || "LIFESHORT이 알려준 맞춤일정으로 여행을 떠나보세요."}
+          </p>
         </section>
 
-        <section className={styles.mapArea} aria-label="여행 동선 지도">
-          <div className={styles.mapLabel}>Google</div>
-          <span className={`${styles.pin} ${styles.pinOne}`}>1</span>
-          <span className={`${styles.pin} ${styles.pinTwo}`}>2</span>
-        </section>
+        <GoogleRouteMap route={route} />
 
         <nav className={styles.dayTabs} aria-label="일정 탭">
           {dayTabs.map((day) => (
@@ -85,7 +163,9 @@ export default function AiResult({ onBack, onRetry }: Props) {
           ) : (
             plans.map((item) => (
               <article key={item.id} className={styles.timelineRow}>
-                <span className={`${styles.badge} ${styles[toBadgeColor(item.type)]}`}>
+                <span
+                  className={`${styles.badge} ${styles[toBadgeColor(item.type)]}`}
+                >
                   {item.id}
                 </span>
                 <div className={styles.card}>
@@ -108,8 +188,7 @@ export default function AiResult({ onBack, onRetry }: Props) {
           <p className={styles.emoji}>💖</p>
           <h3>추천일정이 마음에 드세요?</h3>
           <p>
-            추천받은 일정을 내 일정으로 담으면 언제든 확인하고 편집할 수
-            있어요!
+            추천받은 일정을 내 일정으로 담으면 언제든 확인하고 편집할 수 있어요!
           </p>
         </section>
 
@@ -118,10 +197,18 @@ export default function AiResult({ onBack, onRetry }: Props) {
             ⤓ 내 일정으로 담기
           </button>
           <div className={styles.secondaryRow}>
-            <button type="button" className={styles.secondaryButton} onClick={onRetry}>
+            <button
+              type="button"
+              className={styles.secondaryButton}
+              onClick={onRetry}
+            >
               ↻ 새로운 추천받기
             </button>
-            <button type="button" className={styles.secondaryButton} onClick={onBack}>
+            <button
+              type="button"
+              className={styles.secondaryButton}
+              onClick={onBack}
+            >
               ⌂ 다시하기
             </button>
           </div>
